@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cfcd45d7f8894019b0d3e2ea5c21078d" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="TestDBModel.ACTIVITY_LOG_DB" Width="1.5" PointX="7.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Authorizer" Width="1.5" PointX="12" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Branch" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Category" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.EmailRequest" Width="1.5" PointX="7.375" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Item" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.ReorderLevel" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.RequestStatu" Width="1.5" PointX="12.125" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Requisition" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.StockTable" Width="1.5" PointX="9.875" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.TRANSACTIONS_HISTORY_DB" Width="1.5" PointX="9.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TestDBModel.Unit" Width="1.5" PointX="14.75" PointY="5.625" IsExpanded="true" />
+        <AssociationConnector Association="TestDBModel.FK__Requisiti__Branc__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Item__CategoryId__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Item__ReorderLev__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Item__UnitId__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Requisiti__Curre__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Requisiti__ItemI__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__StockTabl__Curre__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__StockTabl__ItemI__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="TestDBModel.FK__Requisiti__Reque__3F466844" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

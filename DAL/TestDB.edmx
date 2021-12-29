@@ -1,0 +1,934 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ACTIVITY_LOG_DB">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ACTION" Type="nvarchar" MaxLength="256" />
+          <Property Name="ACTIVITY_USER" Type="nvarchar" MaxLength="256" />
+          <Property Name="BRANCH" Type="nvarchar" MaxLength="256" />
+          <Property Name="SCREEN" Type="nvarchar" MaxLength="256" />
+          <Property Name="LOG_DATE" Type="nvarchar" MaxLength="70" />
+          <Property Name="LOG_TIME" Type="time" Precision="7" />
+          <Property Name="IP_ADDRESS" Type="nvarchar" MaxLength="256" />
+          <Property Name="ACTION_STATUS" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Authorizer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="256" />
+          <Property Name="Action" Type="nvarchar" MaxLength="260" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="256" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="BranchCode" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="nchar" MaxLength="70" />
+          <Property Name="BranchCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Location" Type="nchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="hopName" Type="varchar" MaxLength="100" />
+          <Property Name="hopEmail" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmailRequests">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Request" Type="nvarchar" MaxLength="50" />
+          <Property Name="Status" Type="bit" />
+          <Property Name="Maker" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="nvarchar" MaxLength="50" />
+          <Property Name="Time" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="nchar" MaxLength="70" />
+          <Property Name="CurrentStock" Type="int" />
+          <Property Name="SafetyStock" Type="int" />
+          <Property Name="ActualStock" Type="int" />
+          <Property Name="OrderQuantity" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="UnitId" Type="int" />
+          <Property Name="ReorderLevelId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ReorderLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Level" Type="nchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RequestStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="nchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuantityRequested" Type="int" />
+          <Property Name="DateRequested" Type="datetime" />
+          <Property Name="RequestedBy" Type="nchar" MaxLength="70" />
+          <Property Name="AuthorizedBy" Type="nchar" MaxLength="70" />
+          <Property Name="DateAuthorized" Type="datetime" />
+          <Property Name="QuantityIssued" Type="int" />
+          <Property Name="IssuedBy" Type="nchar" MaxLength="70" />
+          <Property Name="DateIssued" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="CurrentQuantityId" Type="int" />
+          <Property Name="BranchCode" Type="nchar" MaxLength="10" />
+          <Property Name="RequestStatusId" Type="int" />
+        </EntityType>
+        <EntityType Name="StockTable">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Vendor" Type="nchar" MaxLength="70" />
+          <Property Name="StockQuantity" Type="int" />
+          <Property Name="StockDate" Type="datetime" />
+          <Property Name="StockedBy" Type="nchar" MaxLength="70" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="CurrentQuantityId" Type="int" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS_HISTORY_DB">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RECORD_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="RECORD_TABLE" Type="nchar" MaxLength="256" />
+          <Property Name="OLD_DATA" Type="nvarchar(max)" />
+          <Property Name="NEW_DATA" Type="nvarchar(max)" />
+          <Property Name="ACTION_MAKER" Type="nchar" MaxLength="256" />
+          <Property Name="ACTION_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitName" Type="nchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UserCreated" Type="varchar" MaxLength="70" />
+          <Property Name="AuthorizationStatus" Type="varchar" MaxLength="50" />
+          <Property Name="AuthorizationDate" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Item__CategoryId__398D8EEE">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__ReorderLev__3A81B327">
+          <End Role="ReorderLevel" Type="Self.ReorderLevel" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReorderLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ReorderLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__UnitId__3B75D760">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__Branc__3C69FB99">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="BranchCode" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="BranchCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__Curre__3D5E1FD2">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="CurrentQuantityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__ItemI__3E52440B">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__Reque__3F466844">
+          <End Role="RequestStatus" Type="Self.RequestStatus" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="RequestStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTabl__Curre__403A8C7D">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="StockTable" Type="Self.StockTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTable">
+              <PropertyRef Name="CurrentQuantityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTabl__ItemI__412EB0B6">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="StockTable" Type="Self.StockTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTable">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDBModelStoreContainer">
+          <EntitySet Name="ACTIVITY_LOG_DB" EntityType="Self.ACTIVITY_LOG_DB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Authorizer" EntityType="Self.Authorizer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailRequests" EntityType="Self.EmailRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReorderLevel" EntityType="Self.ReorderLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requisition" EntityType="Self.Requisition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockTable" EntityType="Self.StockTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACTIONS_HISTORY_DB" EntityType="Self.TRANSACTIONS_HISTORY_DB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Item__CategoryId__398D8EEE" Association="Self.FK__Item__CategoryId__398D8EEE">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__ReorderLev__3A81B327" Association="Self.FK__Item__ReorderLev__3A81B327">
+            <End Role="ReorderLevel" EntitySet="ReorderLevel" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__UnitId__3B75D760" Association="Self.FK__Item__UnitId__3B75D760">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__Branc__3C69FB99" Association="Self.FK__Requisiti__Branc__3C69FB99">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__Curre__3D5E1FD2" Association="Self.FK__Requisiti__Curre__3D5E1FD2">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__ItemI__3E52440B" Association="Self.FK__Requisiti__ItemI__3E52440B">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__Reque__3F466844" Association="Self.FK__Requisiti__Reque__3F466844">
+            <End Role="RequestStatus" EntitySet="RequestStatus" />
+            <End Role="Requisition" EntitySet="Requisition" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTabl__Curre__403A8C7D" Association="Self.FK__StockTabl__Curre__403A8C7D">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="StockTable" EntitySet="StockTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTabl__ItemI__412EB0B6" Association="Self.FK__StockTabl__ItemI__412EB0B6">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="StockTable" EntitySet="StockTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ACTIVITY_LOG_DB">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ACTION" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ACTIVITY_USER" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="BRANCH" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="SCREEN" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="LOG_DATE" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="LOG_TIME" Type="Time" Precision="7" />
+          <Property Name="IP_ADDRESS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_STATUS" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Authorizer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="260" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="BranchCode" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="BranchCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="hopName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="hopEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.FK__Requisiti__Branc__3C69FB99" FromRole="Branch" ToRole="Requisition" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK__Item__CategoryId__398D8EEE" FromRole="Category" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="EmailRequest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Request" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="Maker" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="CurrentStock" Type="Int32" />
+          <Property Name="SafetyStock" Type="Int32" />
+          <Property Name="ActualStock" Type="Int32" />
+          <Property Name="OrderQuantity" Type="Int32" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="UnitId" Type="Int32" />
+          <Property Name="ReorderLevelId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Item__CategoryId__398D8EEE" FromRole="Item" ToRole="Category" />
+          <NavigationProperty Name="ReorderLevel" Relationship="Self.FK__Item__ReorderLev__3A81B327" FromRole="Item" ToRole="ReorderLevel" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__Item__UnitId__3B75D760" FromRole="Item" ToRole="Unit" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.FK__Requisiti__Curre__3D5E1FD2" FromRole="Item" ToRole="Requisition" />
+          <NavigationProperty Name="Requisitions1" Relationship="Self.FK__Requisiti__ItemI__3E52440B" FromRole="Item" ToRole="Requisition" />
+          <NavigationProperty Name="StockTables" Relationship="Self.FK__StockTabl__Curre__403A8C7D" FromRole="Item" ToRole="StockTable" />
+          <NavigationProperty Name="StockTables1" Relationship="Self.FK__StockTabl__ItemI__412EB0B6" FromRole="Item" ToRole="StockTable" />
+        </EntityType>
+        <EntityType Name="ReorderLevel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Level" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK__Item__ReorderLev__3A81B327" FromRole="ReorderLevel" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="RequestStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Requisitions" Relationship="Self.FK__Requisiti__Reque__3F466844" FromRole="RequestStatus" ToRole="Requisition" />
+        </EntityType>
+        <EntityType Name="Requisition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuantityRequested" Type="Int32" />
+          <Property Name="DateRequested" Type="DateTime" Precision="3" />
+          <Property Name="RequestedBy" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="AuthorizedBy" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="DateAuthorized" Type="DateTime" Precision="3" />
+          <Property Name="QuantityIssued" Type="Int32" />
+          <Property Name="IssuedBy" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="DateIssued" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="CurrentQuantityId" Type="Int32" />
+          <Property Name="BranchCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="RequestStatusId" Type="Int32" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK__Requisiti__Branc__3C69FB99" FromRole="Requisition" ToRole="Branch" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__Requisiti__Curre__3D5E1FD2" FromRole="Requisition" ToRole="Item" />
+          <NavigationProperty Name="Item1" Relationship="Self.FK__Requisiti__ItemI__3E52440B" FromRole="Requisition" ToRole="Item" />
+          <NavigationProperty Name="RequestStatu" Relationship="Self.FK__Requisiti__Reque__3F466844" FromRole="Requisition" ToRole="RequestStatus" />
+        </EntityType>
+        <EntityType Name="StockTable">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Vendor" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="StockQuantity" Type="Int32" />
+          <Property Name="StockDate" Type="DateTime" Precision="3" />
+          <Property Name="StockedBy" Type="String" MaxLength="70" FixedLength="true" Unicode="true" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="CurrentQuantityId" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Item" Relationship="Self.FK__StockTabl__Curre__403A8C7D" FromRole="StockTable" ToRole="Item" />
+          <NavigationProperty Name="Item1" Relationship="Self.FK__StockTabl__ItemI__412EB0B6" FromRole="StockTable" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONS_HISTORY_DB">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+          </Key>
+          <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RECORD_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RECORD_TABLE" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+          <Property Name="OLD_DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NEW_DATA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ACTION_MAKER" Type="String" MaxLength="256" FixedLength="true" Unicode="true" />
+          <Property Name="ACTION_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UserCreated" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AuthorizationDate" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Items" Relationship="Self.FK__Item__UnitId__3B75D760" FromRole="Unit" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK__Requisiti__Branc__3C69FB99">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="BranchCode" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="BranchCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__CategoryId__398D8EEE">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__ReorderLev__3A81B327">
+          <End Role="ReorderLevel" Type="Self.ReorderLevel" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReorderLevel">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ReorderLevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Item__UnitId__3B75D760">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__Curre__3D5E1FD2">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="CurrentQuantityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__ItemI__3E52440B">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTabl__Curre__403A8C7D">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="StockTable" Type="Self.StockTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTable">
+              <PropertyRef Name="CurrentQuantityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StockTabl__ItemI__412EB0B6">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="StockTable" Type="Self.StockTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StockTable">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requisiti__Reque__3F466844">
+          <End Role="RequestStatus" Type="Self.RequestStatu" Multiplicity="0..1" />
+          <End Role="Requisition" Type="Self.Requisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Requisition">
+              <PropertyRef Name="RequestStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ACTIVITY_LOG_DB" EntityType="Self.ACTIVITY_LOG_DB" />
+          <EntitySet Name="Authorizers" EntityType="Self.Authorizer" />
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="EmailRequests" EntityType="Self.EmailRequest" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="ReorderLevels" EntityType="Self.ReorderLevel" />
+          <EntitySet Name="RequestStatus" EntityType="Self.RequestStatu" />
+          <EntitySet Name="Requisitions" EntityType="Self.Requisition" />
+          <EntitySet Name="StockTables" EntityType="Self.StockTable" />
+          <EntitySet Name="TRANSACTIONS_HISTORY_DB" EntityType="Self.TRANSACTIONS_HISTORY_DB" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <AssociationSet Name="FK__Requisiti__Branc__3C69FB99" Association="Self.FK__Requisiti__Branc__3C69FB99">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__CategoryId__398D8EEE" Association="Self.FK__Item__CategoryId__398D8EEE">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__ReorderLev__3A81B327" Association="Self.FK__Item__ReorderLev__3A81B327">
+            <End Role="ReorderLevel" EntitySet="ReorderLevels" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Item__UnitId__3B75D760" Association="Self.FK__Item__UnitId__3B75D760">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__Curre__3D5E1FD2" Association="Self.FK__Requisiti__Curre__3D5E1FD2">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__ItemI__3E52440B" Association="Self.FK__Requisiti__ItemI__3E52440B">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTabl__Curre__403A8C7D" Association="Self.FK__StockTabl__Curre__403A8C7D">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="StockTable" EntitySet="StockTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockTabl__ItemI__412EB0B6" Association="Self.FK__StockTabl__ItemI__412EB0B6">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="StockTable" EntitySet="StockTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requisiti__Reque__3F466844" Association="Self.FK__Requisiti__Reque__3F466844">
+            <End Role="RequestStatus" EntitySet="RequestStatus" />
+            <End Role="Requisition" EntitySet="Requisitions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestDBModelStoreContainer" CdmEntityContainer="TestDBEntities">
+          <EntitySetMapping Name="ACTIVITY_LOG_DB">
+            <EntityTypeMapping TypeName="TestDBModel.ACTIVITY_LOG_DB">
+              <MappingFragment StoreEntitySet="ACTIVITY_LOG_DB">
+                <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+                <ScalarProperty Name="USER_ACTION" ColumnName="USER_ACTION" />
+                <ScalarProperty Name="ACTIVITY_USER" ColumnName="ACTIVITY_USER" />
+                <ScalarProperty Name="BRANCH" ColumnName="BRANCH" />
+                <ScalarProperty Name="SCREEN" ColumnName="SCREEN" />
+                <ScalarProperty Name="LOG_DATE" ColumnName="LOG_DATE" />
+                <ScalarProperty Name="LOG_TIME" ColumnName="LOG_TIME" />
+                <ScalarProperty Name="IP_ADDRESS" ColumnName="IP_ADDRESS" />
+                <ScalarProperty Name="ACTION_STATUS" ColumnName="ACTION_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Authorizers">
+            <EntityTypeMapping TypeName="TestDBModel.Authorizer">
+              <MappingFragment StoreEntitySet="Authorizer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="TestDBModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="hopName" ColumnName="hopName" />
+                <ScalarProperty Name="hopEmail" ColumnName="hopEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="TestDBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailRequests">
+            <EntityTypeMapping TypeName="TestDBModel.EmailRequest">
+              <MappingFragment StoreEntitySet="EmailRequests">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Request" ColumnName="Request" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Maker" ColumnName="Maker" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="TestDBModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="CurrentStock" ColumnName="CurrentStock" />
+                <ScalarProperty Name="SafetyStock" ColumnName="SafetyStock" />
+                <ScalarProperty Name="ActualStock" ColumnName="ActualStock" />
+                <ScalarProperty Name="OrderQuantity" ColumnName="OrderQuantity" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="ReorderLevelId" ColumnName="ReorderLevelId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReorderLevels">
+            <EntityTypeMapping TypeName="TestDBModel.ReorderLevel">
+              <MappingFragment StoreEntitySet="ReorderLevel">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestStatus">
+            <EntityTypeMapping TypeName="TestDBModel.RequestStatu">
+              <MappingFragment StoreEntitySet="RequestStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requisitions">
+            <EntityTypeMapping TypeName="TestDBModel.Requisition">
+              <MappingFragment StoreEntitySet="Requisition">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="QuantityRequested" ColumnName="QuantityRequested" />
+                <ScalarProperty Name="DateRequested" ColumnName="DateRequested" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="AuthorizedBy" ColumnName="AuthorizedBy" />
+                <ScalarProperty Name="DateAuthorized" ColumnName="DateAuthorized" />
+                <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
+                <ScalarProperty Name="IssuedBy" ColumnName="IssuedBy" />
+                <ScalarProperty Name="DateIssued" ColumnName="DateIssued" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CurrentQuantityId" ColumnName="CurrentQuantityId" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTables">
+            <EntityTypeMapping TypeName="TestDBModel.StockTable">
+              <MappingFragment StoreEntitySet="StockTable">
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
+                <ScalarProperty Name="StockDate" ColumnName="StockDate" />
+                <ScalarProperty Name="StockedBy" ColumnName="StockedBy" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="CurrentQuantityId" ColumnName="CurrentQuantityId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONS_HISTORY_DB">
+            <EntityTypeMapping TypeName="TestDBModel.TRANSACTIONS_HISTORY_DB">
+              <MappingFragment StoreEntitySet="TRANSACTIONS_HISTORY_DB">
+                <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+                <ScalarProperty Name="RECORD_ID" ColumnName="RECORD_ID" />
+                <ScalarProperty Name="RECORD_TABLE" ColumnName="RECORD_TABLE" />
+                <ScalarProperty Name="OLD_DATA" ColumnName="OLD_DATA" />
+                <ScalarProperty Name="NEW_DATA" ColumnName="NEW_DATA" />
+                <ScalarProperty Name="ACTION_MAKER" ColumnName="ACTION_MAKER" />
+                <ScalarProperty Name="ACTION_DATE" ColumnName="ACTION_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="TestDBModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="UserCreated" ColumnName="UserCreated" />
+                <ScalarProperty Name="AuthorizationStatus" ColumnName="AuthorizationStatus" />
+                <ScalarProperty Name="AuthorizationDate" ColumnName="AuthorizationDate" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
